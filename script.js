@@ -1222,5 +1222,83 @@ if (document.readyState === "loading") {
 }
 
 
+/* ========================================
+   HOMEPAGE CAMPAIGN BANNER
+   Managed through Pages CMS
+======================================== */
+
+async function loadHomepageCampaignBanner() {
+  const section = document.getElementById(
+    "homepage-campaign-banner"
+  );
+
+  const image = document.getElementById(
+    "homepage-banner-image"
+  );
+
+  if (!section || !image) return;
+
+  try {
+    const response = await fetch(
+      "/data/campaign.json",
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) {
+      throw new Error("Campaign information unavailable");
+    }
+
+    const campaign = await response.json();
+
+    const banner = campaign.homepageBanner;
+
+    if (
+      typeof banner !== "string" ||
+      !banner.trim()
+    ) {
+      return;
+    }
+
+    const imageUrl = new URL(
+      banner.trim(),
+      window.location.origin
+    );
+
+    if (imageUrl.origin !== window.location.origin) {
+      return;
+    }
+
+    image.onload = function () {
+      section.hidden = false;
+    };
+
+    image.onerror = function () {
+      section.hidden = true;
+      console.error("Homepage banner image failed to load");
+    };
+
+    image.src = imageUrl.href;
+
+  } catch (error) {
+    console.error(
+      "Homepage banner loading error:",
+      error
+    );
+  }
+}
+
+/* LOAD HOMEPAGE BANNER WHEN READY */
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadHomepageCampaignBanner
+  );
+} else {
+  loadHomepageCampaignBanner();
+}
+
+
+
 
 
