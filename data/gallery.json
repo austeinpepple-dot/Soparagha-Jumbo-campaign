@@ -1,2 +1,9 @@
-
-[]
+[
+  {
+    "image": "/media/IMG-20261015-WA0013.jpg",
+    "caption": "Soparagha Sobere Jumbo campaign artwork uploaded to test the website's photo gallery management system.",
+    "event": "Website Gallery Test — Not an Official Campaign Event",
+    "date": "2026-10-19",
+    "published": false
+  }
+]
