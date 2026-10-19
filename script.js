@@ -616,8 +616,11 @@ document.addEventListener(
         image.loading = "lazy";
 
         image.style.width = "100%";
-        image.style.height = "240px";
-        image.style.objectFit = "cover";
+         
+        image.style.height = "auto";
+         
+        image.style.objectFit = "contain";
+
         image.style.display = "block";
 
         card.appendChild(image);
