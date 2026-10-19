@@ -1,0 +1,1016 @@
+
+/* ==========================================
+   SOPARAGHA SOBERE JUMBO
+   OFFICIAL CAMPAIGN WEBSITE
+   MAIN STYLESHEET
+========================================== */
+
+/* GLOBAL SETTINGS */
+
+:root {
+  --navy: #121f35;
+  --navy-dark: #0a1426;
+  --navy-light: #233653;
+  --gold: #d8a65d;
+  --gold-light: #f2d6a5;
+  --cream: #f7f3ec;
+  --white: #ffffff;
+  --text: #263044;
+  --muted: #687184;
+  --border: #e5e5e5;
+  --radius: 12px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--white);
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+.container {
+  width: min(1160px, 90%);
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* ==========================================
+   WEBSITE HEADER
+========================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  min-height: 85px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--navy);
+}
+
+.brand-symbol {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: var(--navy);
+  color: var(--gold);
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.primary-navigation {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.primary-navigation a {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  transition: color 0.2s ease;
+}
+
+.primary-navigation a:hover {
+  color: #9b6b29;
+}
+
+.primary-navigation .nav-contact {
+  padding: 11px 19px;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.primary-navigation .nav-contact:hover {
+  background: var(--navy-light);
+  color: var(--white);
+}
+
+.menu-button {
+  display: none;
+}
+
+/* ==========================================
+   HERO SECTION
+========================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.hero-decoration {
+  position: absolute;
+  width: 650px;
+  height: 650px;
+  border-radius: 50%;
+  right: -220px;
+  top: -180px;
+  background: radial-gradient(
+    circle,
+    rgba(216,166,93,0.12),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.hero-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 65px;
+  align-items: center;
+  padding-top: 105px;
+  padding-bottom: 105px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.eyebrow.light {
+  color: var(--gold-light);
+}
+
+.dot {
+  padding: 0 9px;
+}
+
+.hero h1 {
+  font-size: clamp(60px, 7.5vw, 112px);
+  line-height: 0.99;
+  letter-spacing: -4px;
+  font-weight: 900;
+  margin: 25px 0 30px;
+}
+
+.hero h1 em {
+  color: var(--gold);
+  font-style: normal;
+}
+
+.period {
+  color: var(--gold);
+}
+
+.hero-subtitle {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.hero-party {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #bfc6d2;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 35px;
+}
+
+/* BUTTONS */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 23px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: all 0.2s ease;
+}
+
+.button-primary {
+  background: var(--gold);
+  color: var(--navy-dark);
+}
+
+.button-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.button-outline {
+  border: 1px solid rgba(255,255,255,0.5);
+  color: var(--white);
+}
+
+.button-outline:hover {
+  background: var(--white);
+  color: var(--navy);
+}
+
+/* HERO VISUAL CARD */
+
+.hero-card {
+  position: relative;
+  min-height: 465px;
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(
+    145deg,
+    #304665,
+    #182740 60%,
+    #101b2e
+  );
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+}
+
+.hero-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #f0d5ac;
+}
+
+.hero-monogram {
+  text-align: center;
+  font-size: clamp(110px, 14vw, 185px);
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: -10px;
+}
+
+.hero-monogram span {
+  color: var(--gold);
+}
+
+.hero-card-bottom {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  line-height: 1.8;
+}
+
+.hero-card-accent {
+  position: absolute;
+  height: 7px;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  background: var(--gold);
+}
+
+.hero-strip {
+  position: relative;
+  padding: 25px 0;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: #cbd2dd;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ==========================================
+   GENERAL SECTION DESIGN
+========================================== */
+
+.section {
+  padding: 100px 0;
+}
+
+.section-light {
+  background: var(--white);
+}
+
+.section-cream {
+  background: var(--cream);
+}
+
+.section-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 70px;
+}
+
+.section-heading {
+  margin-bottom: 45px;
+}
+
+.section-kicker {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #9e7137;
+  text-transform: uppercase;
+}
+
+.display-title {
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+  color: var(--navy);
+  font-weight: 900;
+  margin-bottom: 30px;
+}
+
+.display-title span {
+  color: #956f3d;
+}
+
+.section-lead {
+  max-width: 710px;
+  font-size: 19px;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 25px;
+}
+
+.body-copy {
+  max-width: 740px;
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+/* CANDIDATE INFORMATION */
+
+.facts {
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.facts div {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 15px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.facts dt {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* ==========================================
+   CAMPAIGN INFORMATION CARDS
+========================================== */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.info-card {
+  background: var(--white);
+  padding: 35px 30px;
+  min-height: 295px;
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid var(--gold);
+  box-shadow: 0 5px 22px rgba(10,20,38,0.05);
+}
+
+.info-index {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #98703b;
+  font-weight: 900;
+}
+
+.info-card h3 {
+  font-size: 26px;
+  letter-spacing: -0.7px;
+  color: var(--navy);
+  margin: 15px 0;
+}
+
+.info-card > p:not(.info-index) {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.card-note {
+  display: block;
+  margin-top: auto;
+  padding-top: 22px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #8b652f;
+}
+
+/* ==========================================
+   NEWS AND GALLERY SECTIONS
+========================================== */
+
+.notice-panel {
+  margin-top: 35px;
+  padding: 40px;
+  background: var(--cream);
+  border-left: 5px solid var(--gold);
+}
+
+.section-cream .notice-panel {
+  background: var(--white);
+}
+
+.notice-panel h3 {
+  font-size: 27px;
+  color: var(--navy);
+  margin: 10px 0;
+}
+
+.notice-panel p:last-child {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+/* ==========================================
+   VIDEO SECTION
+========================================== */
+
+.section-video {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.section-video .section-kicker {
+  color: var(--gold);
+}
+
+.section-video .display-title {
+  color: var(--white);
+}
+
+.section-video .display-title span {
+  color: var(--gold);
+}
+
+.section-video .section-lead {
+  color: #d3d8e0;
+}
+
+.video-placeholder {
+  min-height: 320px;
+  padding: 50px 25px;
+  background: var(--navy-light);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.play-icon {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 25px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 32px;
+}
+
+.video-placeholder h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.video-placeholder p {
+  color: #c4cedc;
+  font-size: 15px;
+}
+
+/* ==========================================
+   CONTACT SECTION
+========================================== */
+
+.section-contact {
+  background: var(--cream);
+}
+
+.contact-notice {
+  margin-top: 30px;
+  padding: 24px;
+  background: var(--white);
+  border: 1px solid #e3dacd;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.fine-print {
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.site-footer {
+  background: var(--navy-dark);
+  color: var(--white);
+  padding: 30px 0;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+}
+
+.footer-inner p {
+  margin: 0;
+  color: #bdc6d2;
+}
+
+.footer-inner a {
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.footer-inner a:hover {
+  color: var(--white);
+}
+
+/* ==========================================
+   TABLET RESPONSIVENESS
+========================================== */
+
+@media (max-width: 900px) {
+
+  .header-inner {
+    min-height: 75px;
+  }
+
+  .menu-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--navy);
+    padding: 11px 15px;
+    cursor: pointer;
+  }
+
+  .menu-label {
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .hamburger i {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--navy);
+  }
+
+  .primary-navigation {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    padding: 22px 5%;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.12);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .primary-navigation.is-open {
+    display: flex;
+  }
+
+  .primary-navigation a {
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .primary-navigation .nav-contact {
+    margin-top: 15px;
+    padding: 13px 18px;
+    text-align: center;
+  }
+
+  .hero-layout {
+    grid-template-columns: 1fr 0.8fr;
+    gap: 30px;
+    padding-top: 75px;
+    padding-bottom: 75px;
+  }
+
+  .hero-card {
+    min-height: 340px;
+    padding: 22px;
+  }
+
+  .hero-monogram {
+    font-size: 105px;
+  }
+
+  .section-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+/* ==========================================
+   MOBILE RESPONSIVENESS
+========================================== */
+
+@media (max-width: 640px) {
+
+  .container {
+    width: 90%;
+  }
+
+  .brand {
+    font-size: 10px;
+    letter-spacing: 0.3px;
+  }
+
+  .brand-symbol {
+    width: 39px;
+    height: 39px;
+    font-size: 16px;
+  }
+
+  .hero-layout {
+    grid-template-columns: 1fr;
+    padding-top: 65px;
+    padding-bottom: 55px;
+  }
+
+  .hero h1 {
+    font-size: clamp(50px, 13vw, 76px);
+    letter-spacing: -2px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-card {
+    min-height: 325px;
+    margin-top: 20px;
+  }
+
+  .hero-monogram {
+    font-size: 130px;
+  }
+
+  .hero-strip {
+    font-size: 10px;
+  }
+
+  .section {
+    padding: 65px 0;
+  }
+
+  .display-title {
+    font-size: 41px;
+    letter-spacing: -1px;
+  }
+
+  .section-lead {
+    font-size: 17px;
+  }
+
+  .facts div {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-card {
+    min-height: 235px;
+  }
+
+  .notice-panel {
+    padding: 25px;
+  }
+
+  .video-placeholder {
+    min-height: 280px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================
+   APC PARTY FLAG COLOUR THEME
+   SOPARAGHA SOBERE JUMBO CAMPAIGN
+========================================== */
+
+:root {
+  --apc-green: #078C4A;
+  --apc-red: #D82032;
+  --apc-blue: #36A9E1;
+  --apc-white: #FFFFFF;
+
+  --navy: #075635;
+  --navy-dark: #06432D;
+  --navy-light: #0C704C;
+
+  --gold: #D82032;
+  --gold-light: #FFDDE1;
+
+  --cream: #F0F9FF;
+  --white: #FFFFFF;
+
+  --text: #193D35;
+  --muted: #526B67;
+  --border: #D9E8E2;
+}
+
+/* APC FLAG STRIPE */
+
+.site-header::before {
+  content: "";
+  display: block;
+  height: 7px;
+  background: linear-gradient(
+    to right,
+    #078C4A 0%,
+    #078C4A 33.33%,
+    #FFFFFF 33.33%,
+    #FFFFFF 66.66%,
+    #36A9E1 66.66%,
+    #36A9E1 100%
+  );
+  border-bottom: 3px solid #D82032;
+}
+
+/* HEADER AND NAVIGATION */
+
+.brand-symbol {
+  background: var(--apc-green);
+  color: var(--apc-white);
+}
+
+.primary-navigation a:hover {
+  color: var(--apc-green);
+}
+
+.primary-navigation .nav-contact {
+  background: var(--apc-green);
+  color: white;
+}
+
+.primary-navigation .nav-contact:hover {
+  background: var(--navy-dark);
+}
+
+/* HOMEPAGE BANNER */
+
+.hero {
+  background: linear-gradient(
+    120deg,
+    #06432D 0%,
+    #078C4A 75%,
+    #087A67 100%
+  );
+}
+
+.hero h1 em {
+  color: #AEE8FF;
+}
+
+.hero h1 .period {
+  color: #FF6672;
+}
+
+.eyebrow.light {
+  color: #B8ECFF;
+}
+
+.hero-party {
+  color: #E4F8EF;
+}
+
+/* HOMEPAGE BUTTONS */
+
+.button-primary {
+  background: var(--apc-red);
+  color: white;
+}
+
+.button-primary:hover {
+  background: #A71627;
+  color: white;
+}
+
+/* CANDIDATE VISUAL */
+
+.hero-card {
+  background: linear-gradient(
+    145deg,
+    #36A9E1,
+    #1478B4 60%,
+    #064E82
+  );
+}
+
+.hero-card-top {
+  color: white;
+}
+
+.hero-monogram span {
+  color: #FF6672;
+}
+
+.hero-card-accent {
+  background: var(--apc-red);
+}
+
+/* CONTENT SECTIONS */
+
+.section-kicker {
+  color: #087341;
+}
+
+.display-title span {
+  color: #0875AA;
+}
+
+.info-card {
+  border-top: 4px solid var(--apc-green);
+}
+
+.info-index {
+  color: #B91C2C;
+}
+
+.card-note {
+  color: #087341;
+}
+
+/* NEWS AND GALLERY */
+
+.notice-panel {
+  border-left: 5px solid var(--apc-blue);
+}
+
+/* VIDEO SECTION */
+
+.section-video {
+  background: #075635;
+}
+
+.section-video .section-kicker {
+  color: #B8ECFF;
+}
+
+.section-video .display-title span {
+  color: #AEE8FF;
+}
+
+.video-placeholder {
+  background: #06432D;
+}
+
+.play-icon {
+  background: var(--apc-red);
+  color: white;
+}
+
+/* CONTACT SECTION */
+
+.contact-notice {
+  border-left: 4px solid var(--apc-green);
+}
+
+/* WEBSITE FOOTER */
+
+.site-footer {
+  background: #06432D;
+}
+
+.footer-inner a {
+  color: #AEE8FF;
+}
