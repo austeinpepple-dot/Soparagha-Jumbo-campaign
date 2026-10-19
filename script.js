@@ -1299,6 +1299,84 @@ if (document.readyState === "loading") {
 }
 
 
+/* =====================================
+   CANDIDATE PHOTO INSIDE BLUE HERO CARD
+   Managed through Pages CMS
+===================================== */
+
+async function loadHeroCandidatePhoto() {
+  const frame = document.getElementById(
+    "hero-candidate-photo-frame"
+  );
+
+  if (!frame) return;
+
+  try {
+    const response = await fetch(
+      "/data/campaign.json",
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) {
+      throw new Error("Campaign information unavailable");
+    }
+
+    const campaign = await response.json();
+    const photoPath = campaign.candidatePhoto;
+
+    if (
+      typeof photoPath !== "string" ||
+      !photoPath.trim()
+    ) {
+      return;
+    }
+
+    const photoUrl = new URL(
+      photoPath.trim(),
+      window.location.origin
+    );
+
+    if (photoUrl.origin !== window.location.origin) {
+      return;
+    }
+
+    const photo = document.createElement("img");
+
+    photo.className = "candidate-hero-photo";
+    photo.alt = "Soparagha Sobere Jumbo";
+
+    photo.onload = function () {
+      frame.replaceChildren(photo);
+      frame.classList.add("has-photo");
+    };
+
+    photo.onerror = function () {
+      console.error("Candidate photograph failed to load");
+    };
+
+    photo.src = photoUrl.href;
+
+  } catch (error) {
+    console.error(
+      "Candidate photograph loading error:",
+      error
+    );
+  }
+}
+
+/* LOAD CANDIDATE PHOTO WHEN WEBSITE IS READY */
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadHeroCandidatePhoto
+  );
+} else {
+  loadHeroCandidatePhoto();
+}
+
+
+
 
 
 
