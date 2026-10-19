@@ -715,3 +715,326 @@ document.addEventListener(
 );
 
 
+/* ==========================================
+   SOPARAGHA SOBERE JUMBO CAMPAIGN
+   DYNAMIC VIDEO MANAGEMENT
+========================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
+
+    // FIND CAMPAIGN VIDEOS SECTION
+
+    const videoSection = document.querySelector(
+      "#videos"
+    );
+
+    if (!videoSection) {
+      return;
+    }
+
+    // EXTRACT A VALID YOUTUBE VIDEO ID
+
+    function getYouTubeId(link) {
+
+      if (typeof link !== "string") {
+        return null;
+      }
+
+      try {
+
+        const url = new URL(link.trim());
+        const host = url.hostname.toLowerCase();
+
+        if (url.protocol !== "https:") {
+          return null;
+        }
+
+        let videoId = null;
+
+        if (
+          host === "youtu.be" ||
+          host === "www.youtu.be"
+        ) {
+
+          videoId = url.pathname.split("/")[1];
+
+        } else if (
+          host === "youtube.com" ||
+          host === "www.youtube.com" ||
+          host === "m.youtube.com"
+        ) {
+
+          const parts = url.pathname.split("/");
+
+          if (url.pathname === "/watch") {
+
+            videoId = url.searchParams.get("v");
+
+          } else if (
+            ["shorts", "live", "embed"].includes(
+              parts[1]
+            )
+          ) {
+
+            videoId = parts[2];
+
+          }
+
+        }
+
+        if (
+          videoId &&
+          /^[a-zA-Z0-9_-]{11}$/.test(videoId)
+        ) {
+          return videoId;
+        }
+
+        return null;
+
+      } catch (error) {
+
+        return null;
+
+      }
+
+    }
+
+    try {
+
+      // LOAD VIDEO INFORMATION
+
+      const response = await fetch(
+        "/data/videos.json",
+        {
+          cache: "no-store"
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Unable to load campaign videos"
+        );
+      }
+
+      const videoData = await response.json();
+
+      if (!Array.isArray(videoData)) {
+        throw new Error(
+          "Video data must be an array"
+        );
+      }
+
+      // FILTER APPROVED VIDEOS
+
+      const publishedVideos = videoData
+        .filter(function (video) {
+
+          return (
+            video &&
+            video.published === true &&
+            typeof video.title === "string" &&
+            video.title.trim() !== "" &&
+            getYouTubeId(video.youtubeUrl)
+          );
+
+        })
+        .sort(function (a, b) {
+
+          return String(b.date || "").localeCompare(
+            String(a.date || "")
+          );
+
+        });
+
+      // KEEP COMING SOON MESSAGE IF EMPTY
+
+      if (publishedVideos.length === 0) {
+        return;
+      }
+
+      // CREATE RESPONSIVE VIDEO GRID
+
+      const videoGrid = document.createElement(
+        "div"
+      );
+
+      videoGrid.className =
+        "campaign-video-grid";
+
+      videoGrid.style.display = "grid";
+
+      videoGrid.style.gridTemplateColumns =
+        "repeat(auto-fit, minmax(min(100%, 320px), 1fr))";
+
+      videoGrid.style.gap = "24px";
+
+      videoGrid.style.marginTop = "30px";
+
+      videoGrid.style.marginBottom = "30px";
+
+      // CREATE VIDEO CARDS
+
+      publishedVideos.forEach(function (video) {
+
+        const videoId = getYouTubeId(
+          video.youtubeUrl
+        );
+
+        const card = document.createElement(
+          "article"
+        );
+
+        card.className = "campaign-video-card";
+
+        card.style.background = "#FFFFFF";
+        card.style.borderRadius = "12px";
+        card.style.overflow = "hidden";
+        card.style.boxShadow =
+          "0 5px 20px rgba(0,0,0,0.12)";
+
+        // VIDEO PLAYER
+
+        const player = document.createElement(
+          "iframe"
+        );
+
+        player.src =
+          "https://www.youtube-nocookie.com/embed/" +
+          videoId;
+
+        player.title = video.title;
+
+        player.loading = "lazy";
+
+        player.allow =
+          "accelerometer; autoplay; clipboard-write; " +
+          "encrypted-media; gyroscope; picture-in-picture; " +
+          "web-share";
+
+        player.allowFullscreen = true;
+
+        player.referrerPolicy =
+          "strict-origin-when-cross-origin";
+
+        player.style.width = "100%";
+        player.style.aspectRatio = "16 / 9";
+        player.style.border = "0";
+        player.style.display = "block";
+
+        card.appendChild(player);
+
+        // VIDEO INFORMATION
+
+        const details = document.createElement(
+          "div"
+        );
+
+        details.style.padding = "20px";
+
+        // VIDEO TITLE
+
+        const title = document.createElement(
+          "h3"
+        );
+
+        title.textContent = video.title;
+        title.style.color = "#087D42";
+        title.style.marginBottom = "12px";
+
+        details.appendChild(title);
+
+        // VIDEO DESCRIPTION
+
+        if (
+          typeof video.description === "string" &&
+          video.description.trim()
+        ) {
+
+          const description = document.createElement(
+            "p"
+          );
+
+          description.textContent =
+            video.description;
+
+          description.style.color = "#333333";
+          description.style.marginBottom = "12px";
+
+          details.appendChild(description);
+
+        }
+
+        // PUBLICATION DATE
+
+        if (video.date) {
+
+          const date = document.createElement(
+            "p"
+          );
+
+          date.textContent = String(video.date);
+
+          date.style.fontSize = "13px";
+          date.style.color = "#666666";
+
+          details.appendChild(date);
+
+        }
+
+        card.appendChild(details);
+
+        videoGrid.appendChild(card);
+
+      });
+
+      // FIND EXISTING COMING SOON MESSAGE
+
+      const placeholderTitle = Array.from(
+        videoSection.querySelectorAll(
+          "h2, h3, h4, p"
+        )
+      ).find(function (element) {
+
+        return element.textContent.trim()
+          .toLowerCase() === "videos coming soon";
+
+      });
+
+      const placeholder = placeholderTitle
+        ? (
+            placeholderTitle.closest(
+              ".video-placeholder, .video-panel, " +
+              ".video-frame, .notice-panel"
+            ) || placeholderTitle.parentElement
+          )
+        : null;
+
+      if (
+        placeholder &&
+        placeholder !== videoSection
+      ) {
+
+        placeholder.replaceWith(videoGrid);
+
+      } else {
+
+        videoSection.appendChild(videoGrid);
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Campaign video loading error:",
+        error
+      );
+
+    }
+
+  }
+);
+
+
+
