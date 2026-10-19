@@ -453,3 +453,262 @@ document.addEventListener(
   }
 );
 
+
+/* ==========================================
+   SOPARAGHA SOBERE JUMBO CAMPAIGN
+   DYNAMIC PHOTO GALLERY
+========================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
+
+    // FIND THE PHOTO GALLERY SECTION
+
+    const gallerySection = document.querySelector(
+      "#gallery"
+    );
+
+    if (!gallerySection) {
+      return;
+    }
+
+    const galleryPlaceholder =
+      gallerySection.querySelector(
+        ".notice-panel"
+      );
+
+    if (!galleryPlaceholder) {
+      console.warn(
+        "Gallery placeholder not found"
+      );
+      return;
+    }
+
+    try {
+
+      // LOAD PHOTOGRAPHS FROM JSON
+
+      const response = await fetch(
+        "/data/gallery.json",
+        {
+          cache: "no-store"
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Unable to load campaign gallery"
+        );
+      }
+
+      const galleryData = await response.json();
+
+      if (!Array.isArray(galleryData)) {
+        throw new Error(
+          "Gallery data must be an array"
+        );
+      }
+
+      // VALIDATE MEDIA PATHS
+
+      function getImagePath(value) {
+
+        if (typeof value !== "string") {
+          return null;
+        }
+
+        const path = value.trim();
+
+        if (
+          !path ||
+          path.includes("..") ||
+          path.includes("\\") ||
+          path.startsWith("//")
+        ) {
+          return null;
+        }
+
+        const normalized = path.startsWith("/")
+          ? path
+          : "/" + path;
+
+        if (!normalized.startsWith("/media/")) {
+          return null;
+        }
+
+        return normalized;
+      }
+
+      // SELECT APPROVED PHOTOGRAPHS
+
+      const publishedPhotos = galleryData
+        .filter(function (photo) {
+
+          return (
+            photo &&
+            photo.published === true &&
+            getImagePath(photo.image) !== null
+          );
+
+        })
+        .sort(function (a, b) {
+
+          return String(b.date || "").localeCompare(
+            String(a.date || "")
+          );
+
+        });
+
+      // KEEP COMING SOON MESSAGE IF EMPTY
+
+      if (publishedPhotos.length === 0) {
+        return;
+      }
+
+      // CREATE RESPONSIVE PHOTO GRID
+
+      const galleryGrid = document.createElement(
+        "div"
+      );
+
+      galleryGrid.className = "campaign-gallery-grid";
+
+      galleryGrid.style.display = "grid";
+
+      galleryGrid.style.gridTemplateColumns =
+        "repeat(auto-fit, minmax(min(100%, 250px), 1fr))";
+
+      galleryGrid.style.gap = "24px";
+
+      galleryGrid.style.marginTop = "30px";
+
+      // CREATE EACH PHOTO CARD
+
+      publishedPhotos.forEach(function (photo) {
+
+        const card = document.createElement(
+          "figure"
+        );
+
+        card.className = "gallery-card";
+
+        card.style.margin = "0";
+        card.style.background = "#FFFFFF";
+        card.style.borderRadius = "10px";
+        card.style.overflow = "hidden";
+        card.style.boxShadow =
+          "0 4px 18px rgba(0,0,0,0.08)";
+
+        // CREATE IMAGE
+
+        const image = document.createElement(
+          "img"
+        );
+
+        image.src = getImagePath(photo.image);
+
+        image.alt =
+          photo.caption ||
+          photo.event ||
+          "Campaign photograph";
+
+        image.loading = "lazy";
+
+        image.style.width = "100%";
+        image.style.height = "240px";
+        image.style.objectFit = "cover";
+        image.style.display = "block";
+
+        card.appendChild(image);
+
+        // CREATE PHOTO DETAILS
+
+        const details = document.createElement(
+          "figcaption"
+        );
+
+        details.style.padding = "18px";
+
+        // EVENT NAME
+
+        if (
+          typeof photo.event === "string" &&
+          photo.event.trim()
+        ) {
+
+          const eventName = document.createElement(
+            "h3"
+          );
+
+          eventName.textContent = photo.event;
+
+          eventName.style.color = "#078C4A";
+          eventName.style.marginBottom = "10px";
+
+          details.appendChild(eventName);
+
+        }
+
+        // PHOTO CAPTION
+
+        if (
+          typeof photo.caption === "string" &&
+          photo.caption.trim()
+        ) {
+
+          const caption = document.createElement(
+            "p"
+          );
+
+          caption.textContent = photo.caption;
+
+          caption.style.color = "#333333";
+          caption.style.marginBottom = "10px";
+
+          details.appendChild(caption);
+
+        }
+
+        // EVENT DATE
+
+        if (photo.date) {
+
+          const date = document.createElement(
+            "p"
+          );
+
+          date.textContent = String(photo.date);
+
+          date.style.fontSize = "13px";
+          date.style.color = "#666666";
+
+          details.appendChild(date);
+
+        }
+
+        card.appendChild(details);
+
+        galleryGrid.appendChild(card);
+
+      });
+
+      // SHOW APPROVED PHOTOGRAPHS
+
+      galleryPlaceholder.replaceWith(
+        galleryGrid
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Campaign gallery loading error:",
+        error
+      );
+
+    }
+
+  }
+);
+
+
