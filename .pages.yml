@@ -166,5 +166,45 @@ content:
         type: boolean
         description: Enable when the photograph is approved for public display.
 
+        
+  # CAMPAIGN VIDEO MANAGEMENT
+
+  - name: videos
+    label: Campaign Videos
+    type: file
+    path: data/videos.json
+    format: json
+    list: true
+
+    fields:
+
+      - name: title
+        label: Video Title
+        type: string
+        required: true
+
+      - name: youtubeUrl
+        label: YouTube Video Link
+        type: string
+        required: true
+        description: Paste the full YouTube video link.
+
+      - name: description
+        label: Video Description
+        type: text
+        description: Describe the video.
+
+      - name: date
+        label: Publication Date
+        type: date
+
+      - name: published
+        label: Publish Video
+        type: boolean
+        description: Enable when the video is approved for public display.
+
+
+        
+
 
         
