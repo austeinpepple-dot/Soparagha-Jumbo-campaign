@@ -1037,4 +1037,190 @@ document.addEventListener(
 );
 
 
+/* ==========================================
+   SOPARAGHA SOBERE JUMBO CAMPAIGN
+   OFFICIAL SOCIAL MEDIA LINKS
+========================================== */
+
+async function loadCampaignSocialLinks() {
+
+  const container = document.getElementById(
+    "campaign-social-links"
+  );
+
+  if (!container) {
+    return;
+  }
+
+  try {
+
+    // LOAD CAMPAIGN INFORMATION FROM PAGES CMS
+
+    const response = await fetch(
+      "/data/campaign.json",
+      {
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        "Unable to load campaign information"
+      );
+    }
+
+    const campaign = await response.json();
+
+    // AVAILABLE SOCIAL MEDIA PLATFORMS
+
+    const platforms = [
+      {
+        name: "Facebook",
+        field: "facebookUrl",
+        domain: "facebook.com"
+      },
+      {
+        name: "Instagram",
+        field: "instagramUrl",
+        domain: "instagram.com"
+      },
+      {
+        name: "YouTube",
+        field: "youtubeUrl",
+        domain: "youtube.com"
+      }
+    ];
+
+    // VERIFY EACH LINK
+
+    function validateSocialLink(value, domain) {
+
+      if (
+        typeof value !== "string" ||
+        !value.trim()
+      ) {
+        return null;
+      }
+
+      try {
+
+        const url = new URL(value.trim());
+
+        const hostname =
+          url.hostname.toLowerCase();
+
+        if (url.protocol !== "https:") {
+          return null;
+        }
+
+        if (
+          hostname !== domain &&
+          !hostname.endsWith("." + domain)
+        ) {
+          return null;
+        }
+
+        return url.href;
+
+      } catch (error) {
+
+        return null;
+
+      }
+
+    }
+
+    // PREPARE SOCIAL MEDIA CONTAINER
+
+    container.replaceChildren();
+
+    container.style.display = "flex";
+    container.style.flexWrap = "wrap";
+    container.style.gap = "12px";
+    container.style.marginTop = "24px";
+    container.style.marginBottom = "24px";
+
+    let visibleLinks = 0;
+
+    // CREATE SOCIAL MEDIA BUTTONS
+
+    platforms.forEach(function (platform) {
+
+      const link = validateSocialLink(
+        campaign[platform.field],
+        platform.domain
+      );
+
+      if (!link) {
+        return;
+      }
+
+      const button = document.createElement(
+        "a"
+      );
+
+      button.href = link;
+
+      button.textContent = platform.name;
+
+      button.target = "_blank";
+
+      button.rel = "noopener noreferrer";
+
+      button.setAttribute(
+        "aria-label",
+        "Visit our " + platform.name + " page"
+      );
+
+      button.style.display = "inline-block";
+      button.style.padding = "12px 20px";
+      button.style.backgroundColor = "#078747";
+      button.style.color = "#ffffff";
+      button.style.textDecoration = "none";
+      button.style.borderRadius = "8px";
+      button.style.fontWeight = "600";
+      button.style.fontSize = "15px";
+
+      container.appendChild(button);
+
+      visibleLinks++;
+
+    });
+
+    // HIDE EMPTY SOCIAL MEDIA SECTION
+
+    if (visibleLinks === 0) {
+
+      container.style.display = "none";
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Campaign social media loading error:",
+      error
+    );
+
+  }
+
+}
+
+// LOAD WHEN WEBSITE IS READY
+
+if (document.readyState === "loading") {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadCampaignSocialLinks
+  );
+
+} else {
+
+  loadCampaignSocialLinks();
+
+}
+
+
+
 
