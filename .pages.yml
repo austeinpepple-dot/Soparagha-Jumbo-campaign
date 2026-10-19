@@ -62,6 +62,11 @@ content:
         type: image
         description: Upload an approved photograph.
 
+      - name: homepageBanner
+        label: Homepage Banner
+        type: image
+        description: Upload the approved homepage campaign banner.
+  
       - name: campaignEmail
         label: Official Campaign Email
         type: string
