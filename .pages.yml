@@ -85,3 +85,46 @@ content:
       - name: youtubeUrl
         label: YouTube Channel Link
         type: string
+
+
+
+  # CAMPAIGN NEWS MANAGEMENT
+
+  - name: news
+    label: Campaign News
+    type: file
+    path: data/news.json
+    format: json
+    list: true
+
+    fields:
+
+      - name: title
+        label: News Headline
+        type: string
+        required: true
+
+      - name: date
+        label: Publication Date
+        type: date
+        required: true
+
+      - name: summary
+        label: News Summary
+        type: text
+        description: Enter a brief summary of the news.
+
+      - name: body
+        label: Full News Report
+        type: text
+        description: Enter the complete news article.
+
+      - name: image
+        label: News Photograph
+        type: image
+        description: Upload a photograph for this news article.
+
+      - name: published
+        label: Publish Article
+        type: boolean
+        description: Enable when the article is approved for publication.
