@@ -128,3 +128,43 @@ content:
         label: Publish Article
         type: boolean
         description: Enable when the article is approved for publication.
+
+        
+  # CAMPAIGN PHOTO GALLERY MANAGEMENT
+
+  - name: gallery
+    label: Campaign Photo Gallery
+    type: file
+    path: data/gallery.json
+    format: json
+    list: true
+
+    fields:
+
+      - name: image
+        label: Campaign Photograph
+        type: image
+        required: true
+        description: Upload an approved campaign photograph.
+
+      - name: caption
+        label: Photo Caption
+        type: text
+        description: Describe the photograph.
+
+      - name: event
+        label: Campaign Event
+        type: string
+        description: Enter the name of the campaign event.
+
+      - name: date
+        label: Event Date
+        type: date
+
+      - name: published
+        label: Publish Photograph
+        type: boolean
+        description: Enable when the photograph is approved for public display.
+
+
+        
