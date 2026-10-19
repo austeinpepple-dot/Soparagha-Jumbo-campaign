@@ -1,0 +1,87 @@
+
+# ==========================================
+# SOPARAGHA SOBERE JUMBO
+# CAMPAIGN WEBSITE CONTENT MANAGEMENT
+# ==========================================
+
+# MEDIA STORAGE
+
+media:
+  input: media
+  output: /media
+
+# EDITABLE WEBSITE CONTENT
+
+content:
+
+  - name: campaign
+    label: Campaign Information
+    type: file
+    path: data/campaign.json
+    format: json
+
+    fields:
+
+      - name: fullName
+        label: Candidate Full Name
+        type: string
+        required: true
+
+      - name: office
+        label: Political Office
+        type: string
+
+      - name: constituency
+        label: Constituency
+        type: string
+
+      - name: state
+        label: State
+        type: string
+
+      - name: party
+        label: Political Party
+        type: string
+
+      - name: position
+        label: Candidate Position
+        type: string
+
+      - name: biography
+        label: Candidate Biography
+        type: text
+        description: Enter the approved biography.
+
+      - name: manifesto
+        label: Campaign Manifesto
+        type: text
+        description: Enter the approved campaign priorities.
+
+      - name: candidatePhoto
+        label: Candidate Photograph
+        type: image
+        description: Upload an approved photograph.
+
+      - name: campaignEmail
+        label: Official Campaign Email
+        type: string
+
+      - name: phoneNumber
+        label: Campaign Phone Number
+        type: string
+
+      - name: whatsappNumber
+        label: WhatsApp Number
+        type: string
+
+      - name: facebookUrl
+        label: Facebook Page Link
+        type: string
+
+      - name: instagramUrl
+        label: Instagram Page Link
+        type: string
+
+      - name: youtubeUrl
+        label: YouTube Channel Link
+        type: string
