@@ -117,3 +117,111 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+
+/* ==========================================
+   CAMPAIGN INFORMATION
+   LOAD EDITABLE DATA FROM JSON
+========================================== */
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+  try {
+
+    const response = await fetch("/data/campaign.json", {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("Unable to load campaign information");
+    }
+
+    const campaign = await response.json();
+
+    // Safely update text on the website
+
+    function updateText(selector, value) {
+
+      if (typeof value !== "string" || !value.trim()) {
+        return;
+      }
+
+      const element = document.querySelector(selector);
+
+      if (element) {
+        element.textContent = value.trim();
+      }
+
+    }
+
+    // Update campaign party
+
+    updateText(
+      ".hero-party",
+      campaign.party
+    );
+
+    // Update candidate information
+
+    updateText(
+      "#candidate .facts div:nth-child(1) dd",
+      campaign.fullName
+    );
+
+    updateText(
+      "#candidate .facts div:nth-child(2) dd",
+      campaign.constituency
+    );
+
+    updateText(
+      "#candidate .facts div:nth-child(3) dd",
+      campaign.office
+    );
+
+    // Update candidate biography
+
+    updateText(
+      "#candidate .body-copy",
+      campaign.biography
+    );
+
+    // Update campaign manifesto
+
+    updateText(
+      "#campaign .info-card:nth-child(2) p:nth-of-type(2)",
+      campaign.manifesto
+    );
+
+    // Update contact information when provided
+
+    const contact = document.querySelector(
+      "#contact .contact-notice"
+    );
+
+    if (contact) {
+
+      const details = [];
+
+      if (campaign.campaignEmail) {
+        details.push("Email: " + campaign.campaignEmail);
+      }
+
+      if (campaign.phoneNumber) {
+        details.push("Phone: " + campaign.phoneNumber);
+      }
+
+      if (details.length > 0) {
+        contact.textContent = details.join(" | ");
+      }
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Campaign information could not be loaded:",
+      error
+    );
+
+  }
+
+});
