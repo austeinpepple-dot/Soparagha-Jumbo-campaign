@@ -225,3 +225,231 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
 });
+
+
+/* ==========================================
+   SOPARAGHA SOBERE JUMBO CAMPAIGN
+   DYNAMIC NEWS MANAGEMENT
+========================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
+
+    const newsSection = document.querySelector(
+      "#updates .notice-panel"
+    );
+
+    if (!newsSection) {
+      return;
+    }
+
+    try {
+
+      // GET CAMPAIGN NEWS FROM JSON FILE
+
+      const response = await fetch(
+        "/data/news.json",
+        {
+          cache: "no-store"
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Unable to load campaign news"
+        );
+      }
+
+      const newsData = await response.json();
+
+      if (!Array.isArray(newsData)) {
+        throw new Error(
+          "Campaign news must be an array"
+        );
+      }
+
+      // DISPLAY ONLY APPROVED ARTICLES
+
+      const publishedNews = newsData
+        .filter(function (article) {
+
+          return (
+            article &&
+            article.published === true &&
+            typeof article.title === "string" &&
+            article.title.trim() !== ""
+          );
+
+        })
+        .sort(function (a, b) {
+
+          return String(b.date || "").localeCompare(
+            String(a.date || "")
+          );
+
+        });
+
+      // KEEP PLACEHOLDER IF THERE IS NO NEWS
+
+      if (publishedNews.length === 0) {
+        return;
+      }
+
+      // CREATE NEWS CONTAINER
+
+      const newsContainer = document.createElement(
+        "div"
+      );
+
+      newsContainer.className = "news-list";
+
+      // CREATE AN ARTICLE CARD FOR EACH REPORT
+
+      publishedNews.forEach(function (article) {
+
+        const card = document.createElement(
+          "article"
+        );
+
+        card.className = "notice-panel news-card";
+
+        // PUBLICATION DATE
+
+        if (article.date) {
+
+          const date = document.createElement(
+            "p"
+          );
+
+          date.className = "info-index";
+
+          date.textContent = String(article.date);
+
+          card.appendChild(date);
+
+        }
+
+        // NEWS HEADLINE
+
+        const title = document.createElement(
+          "h3"
+        );
+
+        title.textContent = article.title;
+
+        card.appendChild(title);
+
+        // NEWS PHOTOGRAPH
+
+        if (
+          typeof article.image === "string" &&
+          article.image.trim()
+        ) {
+
+          const imagePath = article.image.trim();
+
+          const normalizedPath =
+            imagePath.startsWith("media/")
+              ? "/" + imagePath
+              : imagePath;
+
+          if (
+            normalizedPath.startsWith("/media/") &&
+            !normalizedPath.includes("..")
+          ) {
+
+            const image = document.createElement(
+              "img"
+            );
+
+            image.src = normalizedPath;
+            image.alt = article.title;
+            image.loading = "lazy";
+
+            image.style.width = "100%";
+            image.style.height = "auto";
+            image.style.marginTop = "15px";
+            image.style.borderRadius = "8px";
+
+            card.appendChild(image);
+
+          }
+
+        }
+
+        // NEWS SUMMARY
+
+        if (
+          typeof article.summary === "string" &&
+          article.summary.trim()
+        ) {
+
+          const summary = document.createElement(
+            "p"
+          );
+
+          summary.textContent = article.summary;
+
+          card.appendChild(summary);
+
+        }
+
+        // FULL ARTICLE
+
+        if (
+          typeof article.body === "string" &&
+          article.body.trim()
+        ) {
+
+          const details = document.createElement(
+            "details"
+          );
+
+          const readMore = document.createElement(
+            "summary"
+          );
+
+          readMore.textContent = "Read full article";
+
+          readMore.style.cursor = "pointer";
+          readMore.style.fontWeight = "bold";
+          readMore.style.marginTop = "15px";
+
+          const fullReport = document.createElement(
+            "p"
+          );
+
+          fullReport.textContent = article.body;
+          fullReport.style.whiteSpace = "pre-line";
+          fullReport.style.marginTop = "15px";
+
+          details.appendChild(readMore);
+          details.appendChild(fullReport);
+
+          card.appendChild(details);
+
+        }
+
+        newsContainer.appendChild(card);
+
+      });
+
+      // REPLACE THE COMING SOON MESSAGE
+
+      newsSection.replaceWith(
+        newsContainer
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Campaign news loading error:",
+        error
+      );
+
+    }
+
+  }
+);
+
