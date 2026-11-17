@@ -5,5 +5,12 @@
     "description": "Video of OLGA",
     "date": "2026-11-14",
     "published": true
+  },
+  {
+    "title": "Video draft test",
+    "youtubeUrl": "https://www.youtube.com/watch?v=i0pLqFyT7JQ",
+    "description": "",
+    "date": "",
+    "published": false
   }
 ]
