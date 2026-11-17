@@ -3,5 +3,12 @@
     "image": "/media/FB_IMG_1792440812122-1.jpg",
     "date": "2026-10-19",
     "published": false
+  },
+  {
+    "image": "/media/gallery-2e286012-9896-4160-b4d0-50a876462005.png",
+    "caption": "Test gallery upload",
+    "event": "",
+    "date": "",
+    "published": false
   }
 ]
